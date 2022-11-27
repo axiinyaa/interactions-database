@@ -15,6 +15,7 @@ class Database(Extension):
         t_path = f'{i_path}{self.client.me.name}/'
         
         if not os.path.exists(t_path):
+            os.mkdir(t_path)
             i_path = t_path
     
     class DatabaseType(Enum):

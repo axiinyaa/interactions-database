@@ -12,7 +12,7 @@ class Database(Extension):
     i_path = 'interactions/ext/database/databases/'
     
     @extension_listener()
-    async def on_ready(self):
+    async def on_start(self):
         t_path = f'{i_path}{self.client.me.name}/'
         
         if not os.path.exists(t_path):

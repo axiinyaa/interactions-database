@@ -1,6 +1,7 @@
 from interactions import CommandContext, ComponentContext, Extension, extension_listener
 from json import loads, dumps
 from enum import Enum
+import aiofiles
 import os
 
 class Database(Extension):    
@@ -26,7 +27,7 @@ class Database(Extension):
         CHANNEL = 2
         GUILD = 3
     
-    def GetDatabase(ctx : CommandContext | ComponentContext, type : DatabaseType, database : str, default_data : dict):
+    async def GetDatabase(ctx : CommandContext | ComponentContext, type : DatabaseType, database : str, default_data : dict):
         '''
         Gets the database using the specified string. If the database doesn't exist, it creates it instead.
         
@@ -64,12 +65,12 @@ class Database(Extension):
             
         if not os.path.exists(path):
             
-            with open(path, 'w+') as f:
+            async with aiofiles.open(path, 'w+') as f:
                 default_data.update({d_uid: uid, d_type: type.value})
                 f.write(dumps(default_data))
             return default_data
         
-        with open(path, 'r') as f:
+        async with aiofiles.open(path, 'r') as f:
             data_ = f.read()
             db = data_.split('\n')
             
@@ -85,7 +86,7 @@ class Database(Extension):
             str_data = dumps(default_data)
             db.append(str_data)
             
-            with open(path, 'w') as f:
+            async with aiofiles.open(path, 'w') as f:
                 full_data = '\n'.join(db)
                 f.write(full_data)
 
@@ -101,7 +102,7 @@ class Database(Extension):
             
     async def SetDatabase(ctx : CommandContext | ComponentContext, database : str, value : str, data : str):
         '''
-        Sets a value within an EXISTING database. It's recommended to call GetDatabase(...) first before calling this.
+        Sets a value async within an EXISTING database. It's recommended to call GetDatabase(...) first before calling this.
         
         Parameters:
             ctx (interactions.CommandContext | interactions.ComponentContext): The Context of a command or component.
@@ -132,7 +133,7 @@ class Database(Extension):
         
         path = f'{Database.i_path}{database}.txt'
         
-        with open(path, 'r') as f:
+        async with aiofiles.open(path, 'r') as f:
             data_ = f.read()
             db = data_.split('\n')
             uid = get_type(loads(db[0])[d_type])
@@ -152,7 +153,7 @@ class Database(Extension):
                 db[index] = dumps(json_data)
             index += 1
             
-        with open(path, 'w') as f:
+        async with aiofiles.open(path, 'w') as f:
             full_data = '\n'.join(db)
             f.write(full_data)
             

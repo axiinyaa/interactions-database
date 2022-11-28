@@ -8,18 +8,19 @@ class Database(Extension):
     '''
     The Database Extension.
     '''
-    global i_path
     
     @extension_listener()
     async def on_start(self):
         
-        t_path = f'{Database.i_path}{self.client.me.id}/'
+        global i_path
+        
+        t_path = f'{i_path}{self.client.me.id}/'
         
         if not os.path.exists(t_path):
             os.mkdir(t_path)
-            Database.i_path = t_path
+            i_path = t_path
             
-            print(Database.i_path)
+            print(i_path)
     
     class DatabaseType(Enum):
         '''
@@ -57,7 +58,7 @@ class Database(Extension):
         db = []
         ids = []
         
-        path = f'{Database.i_path}{database}.db'
+        path = f'{i_path}{database}.db'
         
         # The only reason why THIS isn't just 'uid' or 'type' is just in-case a user actually does type 'uid' or 'type' into the default_data field.
         d_uid = 'interactions_extension_database_UID'
@@ -132,7 +133,7 @@ class Database(Extension):
         d_uid = 'interactions_extension_database_UID'
         d_type = 'interactions_extension_database_TYPE'
         
-        path = f'{Database.i_path}{database}.db'
+        path = f'{i_path}{database}.db'
         
         async with aiofiles.open(path, 'r') as f:
             data_ = await f.read()

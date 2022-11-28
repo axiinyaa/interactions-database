@@ -18,6 +18,8 @@ class Database(Extension):
         if not os.path.exists(t_path):
             os.mkdir(t_path)
             Database.i_path = t_path
+            
+            print(Database.i_path)
     
     class DatabaseType(Enum):
         '''

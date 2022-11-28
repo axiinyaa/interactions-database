@@ -56,8 +56,6 @@ class Database(Extension):
         ids = []
         
         path = f'{Database.i_path}{database}.txt'
-
-        uid = 84758
         
         # The only reason why THIS isn't just 'uid' or 'type' is just in-case a user actually does type 'uid' or 'type' into the default_data field.
         d_uid = 'interactions_extension_database_UID'
@@ -67,11 +65,12 @@ class Database(Extension):
             
             async with aiofiles.open(path, 'w+') as f:
                 default_data.update({d_uid: uid, d_type: type.value})
-                f.write(dumps(default_data))
+                await f.write(dumps(default_data))
             return default_data
         
         async with aiofiles.open(path, 'r') as f:
-            data_ = f.read()
+            data_ = await f.read()
+            print(data_)
             db = data_.split('\n')
             
             uid = get_type(loads(db[0])[d_type])
@@ -88,7 +87,7 @@ class Database(Extension):
             
             async with aiofiles.open(path, 'w') as f:
                 full_data = '\n'.join(db)
-                f.write(full_data)
+                await f.write(full_data)
 
             return default_data
         
@@ -134,7 +133,7 @@ class Database(Extension):
         path = f'{Database.i_path}{database}.txt'
         
         async with aiofiles.open(path, 'r') as f:
-            data_ = f.read()
+            data_ = await f.read()
             db = data_.split('\n')
             uid = get_type(loads(db[0])[d_type])
             
@@ -155,6 +154,6 @@ class Database(Extension):
             
         async with aiofiles.open(path, 'w') as f:
             full_data = '\n'.join(db)
-            f.write(full_data)
+            await f.write(full_data)
             
         return json_data

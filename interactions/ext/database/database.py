@@ -9,7 +9,7 @@ class Database(Extension):
     The Database Extension.
     '''
     
-    i_path = 'interactions/ext/database/databases'
+    i_path = 'interactions/ext/database/databases/'
     
     @extension_listener()
     async def on_start(self):
@@ -18,8 +18,8 @@ class Database(Extension):
         
         if not os.path.exists(t_path):
             os.mkdir(t_path)
-        else:
-            Database.i_path = t_path
+        
+        Database.i_path = t_path
     
     class DatabaseType(Enum):
         '''

@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 
 test.py
+interactions/ext/database/databases/*
+!interactions/ext/database/databases/example_database.db
 
 # C extensions
 *.so

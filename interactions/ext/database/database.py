@@ -9,7 +9,7 @@ class Database(Extension):
     The Database Extension.
     '''
     
-    i_path = ''
+    i_path = 'interactions/ext/database/databases'
     
     @extension_listener()
     async def on_start(self):

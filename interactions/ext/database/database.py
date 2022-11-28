@@ -8,19 +8,16 @@ class Database(Extension):
     '''
     The Database Extension.
     '''
-    
-    i_path = ''
+    i_path = 'interactions/ext/database/databases/'
     
     @extension_listener()
     async def on_start(self):
         
-        i_path = 'interactions/ext/database/databases/'
-        
-        t_path = f'{i_path}{self.client.me.id}/'
+        t_path = f'{Database.i_path}{self.client.me.id}/'
         
         if not os.path.exists(t_path):
             os.mkdir(t_path)
-            i_path = t_path
+            Database.i_path = t_path
     
     class DatabaseType(Enum):
         '''

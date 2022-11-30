@@ -19,7 +19,8 @@ class Database(Extension):
         USER = 1
         CHANNEL = 2
         GUILD = 3
-        
+    
+    @staticmethod
     async def create_database(name : str, type : DatabaseType, default_data : dict):
         '''
         Creates a Database if it doesn't already exist.
@@ -50,6 +51,7 @@ class Database(Extension):
             await f.close()
             return default_data
     
+    @staticmethod
     async def get_item(ctx : Union[CommandContext, ComponentContext], database : str):
         '''
         Gets the database using the specified string.
@@ -118,7 +120,7 @@ class Database(Extension):
                 return json_data
             index += 1
             
-            
+    @staticmethod      
     async def set_item(ctx : Union[CommandContext, ComponentContext], database : str, value : str, data : str):
         '''
         Edits an item within a database.
@@ -198,6 +200,7 @@ class Database(Extension):
             
         return json_data
     
+    @staticmethod
     async def delete_item(ctx : Union[CommandContext, ComponentContext], database : str):
         '''
         Deletes an item within your database.

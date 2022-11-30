@@ -54,5 +54,17 @@ await Database.SetItem(ctx = ctx, database = 'coins', value = 'amount_of_coins',
 await ctx.send('Added one coin!')
 ```
 
+To delete an item from the database, use ``Database.DeleteItem()``
+
+```py
+
+db = await Database.DeleteItem(ctx = ctx, database = 'coins')
+
+coins = db.get('amount_of_coins', 0)
+
+await ctx.send(f'Successfully got rid of all your coins. You had {coins} amount of coins!`)
+
+```
+
 ## Performance Concerns?
 While performance isn't significantly important for discord bots, this will write to a file and will loop through it to find values, meaning it will have a O(n) time complexitivity. This means that this extension isn't recommended for HUGE databases, use an actual database instead in those cases!

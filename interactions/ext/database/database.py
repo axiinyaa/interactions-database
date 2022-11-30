@@ -9,7 +9,7 @@ class Database(Extension):
     The Database Extension.
     '''
     
-    i_path = 'interactions/ext/database/databases/db'
+    i_path = 'interactions/ext/database/databases/db/'
     
     class DatabaseType(Enum):
         '''
@@ -37,7 +37,7 @@ class Database(Extension):
         
         if not os.path.exists(path):
             
-            async with aiofiles.open(path, 'w+') as f:
+            async with aiofiles.open(path, 'x') as f:
                 default_data.update({d_uid: 0, d_type: type.value})
                 default_data.update({d_data: default_data})
                 await f.write(dumps(default_data))

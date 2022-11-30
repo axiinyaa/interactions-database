@@ -25,7 +25,7 @@ from interactions.ext.database import Database
 
 bot = interactions.Client(...)
 
-bot.load('interactions.ext.database', uid = 'database_example123')
+bot.load('interactions.ext.database')
 
 @bot.listener()
 async def on_start()

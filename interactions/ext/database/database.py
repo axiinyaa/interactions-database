@@ -33,7 +33,6 @@ class Database(Extension):
         
         d_uid = 'interactions_extension_database_UID'
         d_type = 'interactions_extension_database_TYPE'
-        d_data = 'interactions_extension_database_DATA'
         
         if not os.path.exists(path):
             
@@ -42,7 +41,6 @@ class Database(Extension):
             
             f = await aiofiles.open(path, 'x')
             default_data.update({d_uid: 0, d_type: type.value})
-            default_data.update({d_data: default_data})
             await f.write(dumps(default_data))
             await f.close()
             return default_data
@@ -77,7 +75,8 @@ class Database(Extension):
         # The only reason why THIS isn't just 'uid' or 'type' is just in-case a user actually does type 'uid' or 'type' into the default_data field.
         d_uid = 'interactions_extension_database_UID'
         d_type = 'interactions_extension_database_TYPE'
-        d_data = 'interactions_extension_database_DATA'
+        
+        d_data = ''
 
         path = f'{Database.i_path}{database}.db'
         
@@ -86,7 +85,7 @@ class Database(Extension):
             db = data_.split('\n')
             
             uid = get_type(loads(db[0])[d_type])
-            default_data = loads(db[0])[d_data]
+            default_data = loads(db[0])
             
         for slot in db:
             json_data = loads(slot)

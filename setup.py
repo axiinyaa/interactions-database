@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="interactions-database",
     version="1.0.0",
-    description="Allows for simple disk writing to keep persistant data.",
+    description="Allows for simple disk writing to keep persistent data.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/interactions-py/database",

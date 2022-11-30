@@ -9,16 +9,7 @@ class Database(Extension):
     The Database Extension.
     '''
     
-    i_path = 'interactions/ext/database/databases/'
-    
-    def __init__(self, client, uid):
-        
-        t_path = f'{Database.i_path}{uid}/'
-        
-        if not os.path.exists(t_path):
-            os.mkdir(t_path)
-        
-        Database.i_path = t_path
+    i_path = 'interactions/ext/database/databases/db'
     
     class DatabaseType(Enum):
         '''

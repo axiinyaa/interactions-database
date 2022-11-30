@@ -11,9 +11,9 @@ class Database(Extension):
     
     i_path = 'interactions/ext/database/databases/'
     
-    def __init__(self, client, bot):
+    def __init__(self, client, uid):
         
-        t_path = f'{Database.i_path}{bot.me.id}/'
+        t_path = f'{Database.i_path}{uid}/'
         
         if not os.path.exists(t_path):
             os.mkdir(t_path)

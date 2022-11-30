@@ -19,5 +19,5 @@ base = Base(
     packages="interactions.ext.database",
 )
 
-def setup(client, bot):
-    return Database(client, bot)
+def setup(client, uid = 'database'):
+    return Database(client, uid)

@@ -7,14 +7,15 @@ Persistence, wait-for and Database all have their own use cases. For example, Pe
 ## How do I use it?
 It's quite simple.
 
-First, import the module like so, making sure to pass in your client to the extension.
+First, import the module like so, making sure to pass in a unique string identifier. **CHANGING THIS VALUE ONCE SET IS NOT RECOMMENDED**
+
 ```py
 import interactions
 from interactions.ext.database import Database
 
 bot = interactions.Client(...)
 
-bot.load('interactions.ext.database', bot = bot)
+bot.load('interactions.ext.database', uid = 'database_example123')
 ```
 
 Then, to create a database use ``Database.CreateDatabase()``. It's highly recommended to do this during ``on_start()`` or anytime before getting or setting values.
@@ -24,7 +25,7 @@ from interactions.ext.database import Database
 
 bot = interactions.Client(...)
 
-bot.load('interactions.ext.database', bot = bot)
+bot.load('interactions.ext.database', uid = 'database_example123')
 
 @bot.listener()
 async def on_start()

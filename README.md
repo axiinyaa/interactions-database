@@ -26,16 +26,18 @@ from interactions.ext.database import Database
 
 bot = interactions.Client(...)
 
-@bot.listener()
+bot.load('interactions.ext.database')
+
+@bot.event()
 async def on_start()
 
     default_data = {"amount_of_coins" : 0}
 
     await Database.CreateDatabase(
-        name = 'coins',
-        type = Database.DatabaseType.USER,
-        default_data = default_data
-    )
+            name = 'coins',
+            type = Database.DatabaseType.USER,
+            default_data = default_data
+        )
 ```
 
 To get data from the database, use ``Database.GetItem()``, to set data, use ``Database.SetItem()``.

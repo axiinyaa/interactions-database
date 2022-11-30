@@ -141,7 +141,6 @@ class Database(Extension):
         
         d_uid = 'interactions_extension_database_UID'
         d_type = 'interactions_extension_database_TYPE'
-        d_data = 'interactions_extension_database_DATA'
         
         path = f'{Database.i_path}{database}.db'
         
@@ -149,7 +148,7 @@ class Database(Extension):
             data_ = await f.read()
             db = data_.split('\n')
             uid = get_type(loads(db[0])[d_type])
-            default_data = loads(db[0])[d_data]
+            default_data = loads(db[0])
             
         for slot in db:
             json_data = loads(slot)

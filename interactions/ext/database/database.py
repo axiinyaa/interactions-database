@@ -3,6 +3,7 @@ from json import loads, dumps
 from enum import Enum
 import aiofiles
 import os
+from typing import Union
 
 from __future__ import annotations
 
@@ -24,6 +25,15 @@ class Database(Extension):
     async def create_database(name : str, type : DatabaseType, default_data : dict):
         '''
         Creates a Database if it doesn't already exist.
+        
+        :param name: The name of the database.
+        :type name: str
+        :param type: The type of database to create.
+        :type type: database.Database.DatabaseType
+        :param default_data: The default data to fall back to whenever an item doesn't exist yet.
+        :type default_data: dict
+        :return: Dictionary
+        :rtype: dict
         '''
         
         path = f'{Database.i_path}{name}.db'
@@ -42,9 +52,16 @@ class Database(Extension):
             await f.close()
             return default_data
     
-    async def get_item(ctx : CommandContext | ComponentContext, database : str):
+    async def get_item(ctx : Union[CommandContext, ComponentContext], database : str):
         '''
-        Gets the database using the specified string. Returns a dictionary object.
+        Gets the database using the specified string.
+        
+        :param ctx: The context of a command or component.
+        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
+        :param database: The database to get an item from.
+        :type database: str
+        :return: Dictionary
+        :rtype: dict
         '''
         
         def get_type(uid):
@@ -104,9 +121,18 @@ class Database(Extension):
             index += 1
             
             
-    async def set_item(ctx : CommandContext | ComponentContext, database : str, value : str, data : str):
+    async def set_item(ctx : Union[CommandContext, ComponentContext], database : str, value : str, data : str):
         '''
         Edits an item within a database. Returns the dictionary object of the edited item.
+        
+        :param ctx: The context of a command or component.
+        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
+        :param database: The database to edit an item.
+        :type database: str
+        :param value: The value to edit from the item.
+        :type value: str
+        :param data: The data to edit from the value.
+        :type data: str
         '''
         
         db = []
@@ -172,9 +198,16 @@ class Database(Extension):
             
         return json_data
     
-    async def delete_item(ctx : CommandContext | ComponentContext, database : str):
+    async def delete_item(ctx : Union[CommandContext, ComponentContext], database : str):
         '''
-        Deletes an item within your database. Returns the dictionary of the deleted item, otherwise returns None if an item cannot be found.
+        Deletes an item within your database.
+        
+        :param ctx: The context of a command or component.
+        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
+        :param database: The database to delete an item from.
+        :type database: str
+        :return: A dictionary of the deleted item, returns None if no item was found.
+        :rtype: Union[dict, None]
         '''
         
         d_uid = 'interactions_extension_database_UID'

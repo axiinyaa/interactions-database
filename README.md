@@ -34,7 +34,7 @@ async def on_start()
     await Database.CreateDatabase(
             name = 'coins',
             type = Database.DatabaseType.USER,
-            default_data = {'amount_of_coins': 0})
+            default_data = {'amount_of_coins': 0}
         )
 ```
 

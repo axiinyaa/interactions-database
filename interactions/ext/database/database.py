@@ -11,8 +11,7 @@ class Database(Extension):
     
     i_path = 'interactions/ext/database/databases/'
     
-    @extension_listener()
-    async def on_start(self):
+    async def __init__(self):
         
         t_path = f'{Database.i_path}{self.client.me.id}/'
         

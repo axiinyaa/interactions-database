@@ -37,7 +37,7 @@ class Database(Extension):
         
         if not os.path.exists(path):
             
-            f = await aiofiles.open(path, 'a')
+            f = await aiofiles.open(path, 'a+')
             default_data.update({d_uid: 0, d_type: type.value})
             default_data.update({d_data: default_data})
             await f.write(dumps(default_data))

@@ -5,9 +5,12 @@ A simple json database writer for interactions-py that allows for simple persist
 Persistence, wait-for and Database all have their own use cases. For example, Persistence and wait-for does NOT write to disk, while Database does. This library isn't designed to compete with either of those libraries, and is more focused on storing data quickly to be used at any time.
 
 ## How do I use it?
-It's quite simple.
+First, install the extension using this command.
+```
+pip install git+https://github.com/Axiinyaa/interactions-database
+```
 
-First, import the module like so.
+Once installed, import the module like so.
 
 ```py
 import interactions
@@ -18,7 +21,7 @@ bot = interactions.Client(...)
 bot.load('interactions.ext.database')
 ```
 
-Then, to create a database use ``Database.CreateDatabase()``. It's highly recommended to do this during ``on_start()`` or anytime before getting or setting values.
+Then, to create a database, use ``Database.CreateDatabase()``. It's highly recommended to do this during ``on_start()``.
 ```py
 import interactions
 from interactions.ext.database import Database
@@ -35,7 +38,7 @@ async def on_start()
     await Database.CreateDatabase(
             name = 'coins',
             type = Database.DatabaseType.USER,
-            default_data = {'amount_of_coins': 0}
+            default_data = default_data
         )
 ```
 

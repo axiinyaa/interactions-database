@@ -30,7 +30,7 @@ bot = interactions.Client(...)
 
 bot.load('interactions.ext.database')
 
-@bot.listener()
+@bot.event()
 async def on_start()
 
     default_data = {"amount_of_coins" : 0}

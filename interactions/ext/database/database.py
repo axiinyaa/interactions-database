@@ -53,7 +53,7 @@ class Database(Extension):
                 await f.write(dumps(default_data))
             return default_data
     
-    async def GetDatabase(ctx : CommandContext | ComponentContext, database : str):
+    async def GetItem(ctx : CommandContext | ComponentContext, database : str):
         '''
         Gets the database using the specified string. Returns a dictionary object.
         
@@ -120,7 +120,7 @@ class Database(Extension):
             
     async def SetItem(ctx : CommandContext | ComponentContext, database : str, value : str, data : str):
         '''
-        Edits an item within a database. Returns the dictionary object of the edited item, otherwise returns None if an item cannot be found.
+        Edits an item within a database. Returns the dictionary object of the edited item.
         
         Parameters:
             ctx (interactions.CommandContext | interactions.ComponentContext): The Context of a command or component.
@@ -148,6 +148,7 @@ class Database(Extension):
         
         d_uid = 'interactions_extension_database_UID'
         d_type = 'interactions_extension_database_TYPE'
+        d_data = 'interactions_extension_database_DATA'
         
         path = f'{Database.i_path}{database}.db'
         
@@ -155,6 +156,7 @@ class Database(Extension):
             data_ = await f.read()
             db = data_.split('\n')
             uid = get_type(loads(db[0])[d_type])
+            default_data = loads(db[0])[d_data]
             
         for slot in db:
             json_data = loads(slot)
@@ -165,7 +167,18 @@ class Database(Extension):
         json_data = {}
         
         if not uid in uids:
-            return None
+            default_data.update({d_uid: uid})
+            
+            default_data[value] = data
+
+            str_data = dumps(default_data)
+            db.append(str_data)
+            
+            async with aiofiles.open(path, 'w') as f:
+                full_data = '\n'.join(db)
+                await f.write(full_data)
+
+            return default_data
         
         for id_ in uids:
             if (uid == id_):

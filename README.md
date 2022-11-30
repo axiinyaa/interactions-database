@@ -38,20 +38,20 @@ async def on_start()
         )
 ```
 
-To set data for the database, use ``Database.SetItem()``.
+To get data from the database, use ``Database.GetItem()``, to set data, use ``Database.SetItem()``.
 
 ```py
 # Default Data to fall back to.
 default_data = {"amount_of_coins" : 0}
 
 # Getting the Database called 'coins'
-db = await Database.GetDatabase(ctx = ctx, database = 'coins')
+db = await Database.GetItem(ctx = ctx, database = 'coins')
 
 # Grabbing a value from the database. This a dictionary so it's recommended to use the get() function.
 coins = db.get('amount_of_coins', 0)
 
 # Setting the amount_of_coins value in the 'coins' database.
-await Database.SetValue(ctx = ctx, database = 'coins', value = 'amount_of_coins', data = coins + 1)
+await Database.SetItem(ctx = ctx, database = 'coins', value = 'amount_of_coins', data = coins + 1)
 
 await ctx.send('Added one coin!')
 ```

@@ -5,8 +5,6 @@ import aiofiles
 import os
 from typing import Union
 
-from __future__ import annotations
-
 class Database(Extension):    
     '''
     The Database Extension.

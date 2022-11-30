@@ -4,6 +4,8 @@ from enum import Enum
 import aiofiles
 import os
 
+from __future__ import annotations
+
 class Database(Extension):    
     '''
     The Database Extension.
@@ -19,14 +21,9 @@ class Database(Extension):
         CHANNEL = 2
         GUILD = 3
         
-    async def CreateDatabase(name : str, type : DatabaseType, default_data : dict):
+    async def create_database(name : str, type : DatabaseType, default_data : dict):
         '''
-        Creates a Database if it doesn't already exist. Returns a dictionary object.
-        
-        Parameters:
-            name (str): The name of the database.
-            type (Database.DatabaseType): The type of data to check for. This is used as a Primary Key for the database.
-            default_data (dict): If a value doesn't exist for the DatabaseType, it adds that value to the database.
+        Creates a Database if it doesn't already exist.
         '''
         
         path = f'{Database.i_path}{name}.db'
@@ -45,13 +42,9 @@ class Database(Extension):
             await f.close()
             return default_data
     
-    async def GetItem(ctx : CommandContext | ComponentContext, database : str):
+    async def get_item(ctx : CommandContext | ComponentContext, database : str):
         '''
         Gets the database using the specified string. Returns a dictionary object.
-        
-        Parameters:
-            ctx (interactions.CommandContext | interactions.ComponentContext): The Context of a command or component.
-            database (str): The name of the database to get.
         '''
         
         def get_type(uid):
@@ -111,15 +104,9 @@ class Database(Extension):
             index += 1
             
             
-    async def SetItem(ctx : CommandContext | ComponentContext, database : str, value : str, data : str):
+    async def set_item(ctx : CommandContext | ComponentContext, database : str, value : str, data : str):
         '''
         Edits an item within a database. Returns the dictionary object of the edited item.
-        
-        Parameters:
-            ctx (interactions.CommandContext | interactions.ComponentContext): The Context of a command or component.
-            database (str): The name of the database to edit.
-            value (str): The value in the item to get. For example: {>> "value" <<: "data"}
-            data (str): The data in the item to set. For example: {"value": >> "data" <<}
         '''
         
         db = []
@@ -185,13 +172,9 @@ class Database(Extension):
             
         return json_data
     
-    async def DeleteItem(ctx : CommandContext | ComponentContext, database : str):
+    async def delete_item(ctx : CommandContext | ComponentContext, database : str):
         '''
         Deletes an item within your database. Returns the dictionary of the deleted item, otherwise returns None if an item cannot be found.
-        
-        Parameters:
-            ctx (interactions.CommandContext | interactions.ComponentContext): The Context of a command or component.
-            database (str): The name of the database to edit.
         '''
         
         d_uid = 'interactions_extension_database_UID'

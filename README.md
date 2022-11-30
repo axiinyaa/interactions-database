@@ -41,8 +41,6 @@ async def on_start()
 To get data from the database, use ``Database.GetItem()``, to set data, use ``Database.SetItem()``.
 
 ```py
-# Default Data to fall back to.
-default_data = {"amount_of_coins" : 0}
 
 # Getting the Database called 'coins'
 db = await Database.GetItem(ctx = ctx, database = 'coins')

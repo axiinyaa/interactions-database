@@ -13,7 +13,7 @@ class Database(Extension):
     
     def __init__(self, client):
         
-        t_path = f'{Database.i_path}{self.client.me.id}/'
+        t_path = f'{Database.i_path}{client.me.id}/'
         
         if not os.path.exists(t_path):
             os.mkdir(t_path)

@@ -121,7 +121,7 @@ class Database(Extension):
             
     async def set_item(ctx : Union[CommandContext, ComponentContext], database : str, value : str, data : str):
         '''
-        Edits an item within a database. Returns the dictionary object of the edited item.
+        Edits an item within a database.
         
         :param ctx: The context of a command or component.
         :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
@@ -131,6 +131,8 @@ class Database(Extension):
         :type value: str
         :param data: The data to edit from the value.
         :type data: str
+        :return: A dictionary of the edited item.
+        :rtype: dict
         '''
         
         db = []

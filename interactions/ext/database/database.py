@@ -9,7 +9,7 @@ class Database(Extension):
     The Database Extension.
     '''
     
-    i_path = 'interaction_database_db'
+    i_path = 'interaction_database_db/'
     
     class DatabaseType(Enum):
         '''

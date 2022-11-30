@@ -19,7 +19,7 @@ from interactions.ext.database import Database
 bot = interactions.Client(...)
 ```
 
-Then, to create a database, use ``Database.CreateDatabase()``. It's highly recommended to do this during ``on_start()``.
+Then, to create a database, use ``Database.create_database()``. It's highly recommended to do this during ``on_start()``.
 ```py
 import interactions
 from interactions.ext.database import Database
@@ -33,34 +33,34 @@ async def on_start()
 
     default_data = {"amount_of_coins" : 0}
 
-    await Database.CreateDatabase(
+    await Database.create_database(
             name = 'coins',
             type = Database.DatabaseType.USER,
             default_data = default_data
         )
 ```
 
-To get data from the database, use ``Database.GetItem()``, to set data, use ``Database.SetItem()``.
+To get data from the database, use ``Database.get_item()``, to set data, use ``Database.set_item()``.
 
 ```py
 
 # Getting the Database called 'coins'
-db = await Database.GetItem(ctx = ctx, database = 'coins')
+db = await Database.get_item(ctx = ctx, database = 'coins')
 
 # Grabbing a value from the database. This a dictionary so it's recommended to use the get() function.
 coins = db.get('amount_of_coins', 0)
 
 # Setting the amount_of_coins value in the 'coins' database.
-await Database.SetItem(ctx = ctx, database = 'coins', value = 'amount_of_coins', data = coins + 1)
+await Database.set_item(ctx = ctx, database = 'coins', value = 'amount_of_coins', data = coins + 1)
 
 await ctx.send('Added one coin!')
 ```
 
-To delete an item from the database, use ``Database.DeleteItem()``
+To delete an item from the database, use ``Database.delete_item()``
 
 ```py
 
-db = await Database.DeleteItem(ctx = ctx, database = 'coins')
+db = await Database.delete_item(ctx = ctx, database = 'coins')
 
 coins = db.get('amount_of_coins', 0)
 

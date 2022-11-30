@@ -37,10 +37,11 @@ class Database(Extension):
         
         if not os.path.exists(path):
             
-            async with aiofiles.open(path, 'x') as f:
-                default_data.update({d_uid: 0, d_type: type.value})
-                default_data.update({d_data: default_data})
-                await f.write(dumps(default_data))
+            f = await aiofiles.open(path, 'x')
+            default_data.update({d_uid: 0, d_type: type.value})
+            default_data.update({d_data: default_data})
+            await f.write(dumps(default_data))
+            await f.close()
             return default_data
     
     async def GetItem(ctx : CommandContext | ComponentContext, database : str):

@@ -1,9 +1,11 @@
 from interactions import CommandContext, ComponentContext, Extension, extension_listener
 from json import loads, dumps
 from enum import Enum
+from typing import Union
+
 import aiofiles
 import os
-from typing import Union
+import ctx_manager
 
 class Database(Extension):    
     '''
@@ -121,7 +123,7 @@ class Database(Extension):
             index += 1
             
     @staticmethod      
-    async def set_item(ctx : Union[CommandContext, ComponentContext], database : str, value : str, data : str):
+    async def set_item(ctx : Union[CommandContext, ComponentContext], database : str, value : str, data : Union[str, CommandContext]):
         '''
         Edits an item within a database.
         
@@ -132,10 +134,13 @@ class Database(Extension):
         :param value: The value to edit from the item.
         :type value: str
         :param data: The data to edit from the value.
-        :type data: str
+        :type data: Union[str, CommandContext]
         :return: A dictionary of the edited item.
         :rtype: dict
         '''
+        
+        if data.type == CommandContext:
+            data = data._json
         
         db = []
         uids = []

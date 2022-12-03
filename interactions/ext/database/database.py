@@ -5,8 +5,6 @@ from typing import Union
 
 import aiofiles
 import os
-import ctx_manager
-
 class Database(Extension):    
     '''
     The Database Extension.

@@ -137,7 +137,7 @@ class Database(Extension):
         :rtype: dict
         '''
         
-        if data.type == CommandContext:
+        if type(data) == CommandContext:
             data = data._json
         
         db = []

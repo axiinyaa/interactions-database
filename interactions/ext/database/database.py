@@ -5,7 +5,6 @@ from typing import Union
 
 import aiofiles
 import os
-import ctx_manager
 
 class Database(Extension):    
     '''
@@ -140,7 +139,9 @@ class Database(Extension):
         '''
         
         if type(data) == CommandContext:
-            ctx_manager
+            json_data = data._json
+    
+            print(json_data)
         
         db = []
         uids = []

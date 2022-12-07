@@ -22,7 +22,7 @@ class Database(Extension):
         GUILD = 3
     
     @staticmethod
-    async def create_database(name : str, type : DatabaseType, default_data : dict):
+    async def create_database(name : str, type : DatabaseType, default_data : dict, wipe : bool = False):
         '''
         Creates a Database if it doesn't already exist.
         
@@ -51,6 +51,11 @@ class Database(Extension):
             await f.write(dumps(default_data))
             await f.close()
             return default_data
+    
+        if wipe:
+            async with open('path', 'w') as f:
+                default_data.update({d_uid: 0, d_type: type.value})
+                await f.write(dumps(default_data))
     
     @staticmethod
     async def get_item(ctx : Union[CommandContext, ComponentContext], database : str):

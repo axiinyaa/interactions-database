@@ -32,6 +32,8 @@ class Database(Extension):
         :type type: database.Database.DatabaseType
         :param default_data: The default data to fall back to whenever an item doesn't exist yet.
         :type default_data: dict
+        :param wipe: Wipe the database everytime this function is called.
+        :type wipe: bool
         :return: Dictionary
         :rtype: dict
         '''

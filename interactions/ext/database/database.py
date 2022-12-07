@@ -55,7 +55,7 @@ class Database(Extension):
             return default_data
     
         if wipe:
-            async with open('path', 'w') as f:
+            async with open(path, 'w') as f:
                 default_data.update({d_uid: 0, d_type: type.value})
                 await f.write(dumps(default_data))
     

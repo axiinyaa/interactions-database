@@ -1,4 +1,4 @@
-from interactions import CommandContext, ComponentContext, Extension, extension_listener
+from interactions import CommandContext, ComponentContext, Message, Extension, Snowflake
 from json import loads, dumps
 from enum import Enum
 from typing import Union
@@ -11,6 +11,21 @@ class Database(Extension):
     The Database Extension.
     '''
     
+    @staticmethod
+    def get_type(ctx, uid):
+        '''
+        Do not call directly.
+        '''
+        
+        if uid == 1:
+            return int(ctx.author.id)
+        if uid == 2:
+            return int(ctx.channel_id)
+        if uid == 3:
+            return int(ctx.guild_id)
+        if uid == 4:
+            return 0
+    
     i_path = 'interaction-database/'
     
     class DatabaseType(Enum):
@@ -20,6 +35,7 @@ class Database(Extension):
         USER = 1
         CHANNEL = 2
         GUILD = 3
+        UNIVERSAL = 4
     
     @staticmethod
     async def create_database(name : str, type : DatabaseType, default_data : dict, wipe : bool = False):
@@ -60,31 +76,18 @@ class Database(Extension):
                 await f.write(dumps(default_data))
     
     @staticmethod
-    async def get_item(ctx : Union[CommandContext, ComponentContext], database : str):
+    async def get_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str):
         '''
         Gets the database using the specified string.
         
-        :param ctx: The context of a command or component.
-        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
+        :param uid: The "Key" of the Database. Can use CommandContext, or directly use an id.
+        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext, Message, int]
         :param database: The database to get an item from.
         :type database: str
         :return: Dictionary
         :rtype: dict
         '''
         
-        def get_type(uid):
-            '''
-            Do not call directly.
-            '''
-            
-            if uid == 1:
-                return int(ctx.author.id)
-            if uid == 2:
-                return int(ctx.channel_id)
-            if uid == 3:
-                return int(ctx.guild_id)
-        
-        uid : int = 0
         default_data : dict = {}
         
         db = []
@@ -102,7 +105,9 @@ class Database(Extension):
             data_ = await f.read()
             db = data_.split('\n')
             
-            uid = get_type(loads(db[0])[d_type])
+            if not type(uid) == int:
+                uid =  Database.get_type(uid, loads(db[0])[d_type])
+                
             default_data = loads(db[0])
             
         for slot in db:
@@ -129,16 +134,14 @@ class Database(Extension):
             index += 1
             
     @staticmethod      
-    async def set_item(ctx : Union[CommandContext, ComponentContext], database : str, value : str, data : str):
+    async def set_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str, data : dict):
         '''
         Edits an item within a database.
         
-        :param ctx: The context of a command or component.
-        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
+        :param uid: The "Key" of the Database. Can use CommandContext, or directly use an id.
+        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext, Message, int]
         :param database: The database to edit an item.
         :type database: str
-        :param value: The value to edit from the item.
-        :type value: str
         :param data: The data to edit from the value.
         :type data: str
         :return: A dictionary of the edited item.
@@ -148,20 +151,6 @@ class Database(Extension):
         db = []
         uids = []
         
-        uid = 0
-        
-        def get_type(uid):
-            '''
-            Do not call directly.
-            '''
-            
-            if uid == 1:
-                return int(ctx.author.id)
-            if uid == 2:
-                return int(ctx.channel_id)
-            if uid == 3:
-                return int(ctx.guild_id)
-        
         d_uid = 'interactions_extension_database_UID'
         d_type = 'interactions_extension_database_TYPE'
         
@@ -170,7 +159,8 @@ class Database(Extension):
         async with aiofiles.open(path, 'r') as f:
             data_ = await f.read()
             db = data_.split('\n')
-            uid = get_type(loads(db[0])[d_type])
+            if not type(uid) == int:
+                uid =  Database.get_type(uid, loads(db[0])[d_type])
             default_data = loads(db[0])
             
         for slot in db:
@@ -184,7 +174,7 @@ class Database(Extension):
         if not uid in uids:
             default_data.update({d_uid: uid})
             
-            default_data[value] = data
+            default_data.update(data)
 
             str_data = dumps(default_data)
             db.append(str_data)
@@ -198,7 +188,7 @@ class Database(Extension):
         for id_ in uids:
             if (uid == id_):
                 json_data = loads(db[index])
-                json_data[value] = data
+                default_data.update(data)
                 db[index] = dumps(json_data)
             index += 1
             
@@ -209,12 +199,12 @@ class Database(Extension):
         return json_data
     
     @staticmethod
-    async def delete_item(ctx : Union[CommandContext, ComponentContext], database : str):
+    async def delete_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str):
         '''
         Deletes an item within your database.
         
-        :param ctx: The context of a command or component.
-        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext]
+        :param uid: The "Key" of the Database. Can use CommandContext, or directly use an id.
+        :type ctx: Union[interactions.CommandContext, interactions.ComponentContext, Message, int]
         :param database: The database to delete an item from.
         :type database: str
         :return: A dictionary of the deleted item, returns None if no item was found.
@@ -228,26 +218,14 @@ class Database(Extension):
         
         db = []
         uids = []
-        uid = 0
-        
-        def get_type(uid):
-            '''
-            Do not call directly.
-            '''
-            
-            if uid == 1:
-                return int(ctx.author.id)
-            if uid == 2:
-                return int(ctx.channel_id)
-            if uid == 3:
-                return int(ctx.guild_id)
         
         path = f'{Database.i_path}{database}.db'
         
         async with aiofiles.open(path, 'r') as f:
             data_ = await f.read()
             db = data_.split('\n')
-            uid = get_type(loads(db[0])[d_type])
+            if not type(uid) == int:
+                uid =  Database.get_type(uid, loads(db[0])[d_type])
             
         for slot in db:
             json_data = loads(slot)

@@ -43,13 +43,13 @@ To get data from the database, use ``Database.get_item()``, to set data, use ``D
 ```py
 
 # Getting the Database called 'coins'
-db = await Database.get_item(ctx = ctx, database = 'coins')
+db = await Database.get_item(uid = ctx, database = 'coins')
 
 # Grabbing a value from the database. This a dictionary so it's recommended to use the get() function.
 coins = db.get('amount_of_coins', 0)
 
 # Setting the amount_of_coins value in the 'coins' database.
-await Database.set_item(ctx = ctx, database = 'coins', value = 'amount_of_coins', data = coins + 1)
+await Database.set_item(uid = ctx, database = 'coins', data = {'amount_of_coins' : coins + 1})
 
 await ctx.send('Added one coin!')
 ```
@@ -58,12 +58,23 @@ To delete an item from the database, use ``Database.delete_item()``
 
 ```py
 
-db = await Database.delete_item(ctx = ctx, database = 'coins')
+db = await Database.delete_item(uid = ctx, database = 'coins')
 
 coins = db.get('amount_of_coins', 0)
 
 await ctx.send(f'Successfully got rid of all your coins. You had {coins} amount of coins!`)
 
+```
+
+### Database Types:
+```py
+Database.DatabaseType.USER # The Database will use User IDs as the primary key.
+
+Database.DatabaseType.CHANNEL # The Database will use Channel IDs as the primary key.
+
+Database.DatabaseType.GUILD # The Database will use Guild IDs as the primary key.
+
+Database.DatabaseType.UNIVERSAL # The Database will not use a primary key, instead when called, data will be set universally. E.g. A Universal Count
 ```
 
 ## Performance Concerns?

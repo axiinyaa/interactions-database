@@ -134,7 +134,7 @@ class Database(Extension):
             index += 1
             
     @staticmethod      
-    async def set_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str, data : dict):
+    async def set_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str, key : str, data : None):
         '''
         Edits an item within a database.
         
@@ -142,8 +142,10 @@ class Database(Extension):
         :type ctx: Union[interactions.CommandContext, interactions.ComponentContext, Message, int]
         :param database: The database to edit an item.
         :type database: str
+        :param key: The key to edit from the value.
+        :type key: str
         :param data: The data to edit from the value.
-        :type data: str
+        :type data: Any
         :return: A dictionary of the edited item.
         :rtype: dict
         '''

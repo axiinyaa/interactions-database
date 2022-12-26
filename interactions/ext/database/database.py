@@ -176,7 +176,7 @@ class Database(Extension):
         if not uid in uids:
             default_data.update({d_uid: uid})
             
-            default_data.update(data)
+            default_data[key] = data
 
             str_data = dumps(default_data)
             db.append(str_data)
@@ -190,7 +190,7 @@ class Database(Extension):
         for id_ in uids:
             if (uid == id_):
                 json_data = loads(db[index])
-                default_data.update(data)
+                default_data[key] = data
                 db[index] = dumps(json_data)
             index += 1
             

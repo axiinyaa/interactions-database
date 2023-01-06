@@ -134,7 +134,7 @@ class Database(Extension):
             index += 1
             
     @staticmethod      
-    async def set_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str, key : str, data : None):
+    async def set_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str, data : dict):
         '''
         Edits an item within a database.
         
@@ -176,7 +176,7 @@ class Database(Extension):
         if not uid in uids:
             default_data.update({d_uid: uid})
             
-            default_data[key] = data
+            default_data.update(data)
 
             str_data = dumps(default_data)
             db.append(str_data)
@@ -190,7 +190,7 @@ class Database(Extension):
         for id_ in uids:
             if (uid == id_):
                 json_data = loads(db[index])
-                default_data[key] = data
+                json_data.update(data)
                 db[index] = dumps(json_data)
             index += 1
             

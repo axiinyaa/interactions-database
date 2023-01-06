@@ -142,10 +142,8 @@ class Database(Extension):
         :type ctx: Union[interactions.CommandContext, interactions.ComponentContext, Message, int]
         :param database: The database to edit an item.
         :type database: str
-        :param key: The key to edit from the value.
-        :type key: str
         :param data: The data to edit from the value.
-        :type data: Any
+        :type data: dict
         :return: A dictionary of the edited item.
         :rtype: dict
         '''

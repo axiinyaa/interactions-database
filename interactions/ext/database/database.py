@@ -1,4 +1,4 @@
-from interactions import CommandContext, ComponentContext, Message, Extension, Snowflake
+from interactions import SlashContext, ComponentContext, Message, Extension, Snowflake
 from json import loads, dumps
 from enum import Enum
 from typing import Union
@@ -134,7 +134,7 @@ class Database(Extension):
             index += 1
             
     @staticmethod      
-    async def set_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str, data : dict):
+    async def set_item(uid : Union[SlashContext, ComponentContext, Message, int], database : str, data : dict):
         '''
         Edits an item within a database.
         
@@ -199,7 +199,7 @@ class Database(Extension):
         return json_data
     
     @staticmethod
-    async def delete_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str):
+    async def delete_item(uid : Union[SlashContext, ComponentContext, Message, int], database : str):
         '''
         Deletes an item within your database.
         

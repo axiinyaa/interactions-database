@@ -76,7 +76,7 @@ class Database(Extension):
                 await f.write(dumps(default_data))
     
     @staticmethod
-    async def get_item(uid : Union[CommandContext, ComponentContext, Message, int], database : str):
+    async def get_item(uid : Union[SlashContext, ComponentContext, Message, int], database : str):
         '''
         Gets the database using the specified string.
         
